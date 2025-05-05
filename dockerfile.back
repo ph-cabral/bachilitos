@@ -1,0 +1,18 @@
+# Dockerfile.back
+FROM python:3.10-slim
+
+# Crear y usar un directorio de trabajo
+WORKDIR /app
+
+# Copiar e instalar dependencias
+COPY backend/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar el código del backend (asumo que está en /backend)
+COPY backend/ ./
+
+# Exponer puerto
+EXPOSE 8000
+
+# Comando para levantar Django
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

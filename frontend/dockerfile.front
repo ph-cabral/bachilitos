@@ -1,0 +1,17 @@
+# Usa la imagen oficial de Bun
+FROM oven/bun:1.1.13
+
+# Establece el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copia los archivos del proyecto (excepto los ignorados en .dockerignore)
+COPY . .
+
+# Instala las dependencias del proyecto
+RUN bun install
+
+# Expone el puerto que usa Vite por defecto
+EXPOSE 5173
+
+# Comando para iniciar Vite en modo desarrollo
+CMD ["sh", "-c", "bun install && bun run dev --host"]

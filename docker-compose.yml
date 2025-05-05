@@ -1,0 +1,30 @@
+services:
+  # backend:
+  #   build:
+  #     context: .
+  #     dockerfile: dockerfile.back
+  #   container_name: django_app
+  #   volumes:
+  #     - ./docker/backend:/app  # 👈 carpeta al lado de docker-compose.yml
+  #   ports:
+  #     - "8000:8000"
+  #   working_dir: /app
+  #   command: python manage.py runserver 0.0.0.0:8000
+  #   environment:
+  #     - PYTHONUNBUFFERED=1
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: ./dockerfile.front
+    container_name: con_bachilitos_front
+    image: img_bachilitos_front 
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app:cached
+      # - /app/node_modules
+  
+volumes:
+  vol_bachilitos_front:
+    driver: local

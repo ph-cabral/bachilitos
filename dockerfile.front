@@ -1,0 +1,57 @@
+# Etapa 1: descarga binario de Deno
+ARG DENO_VERSION=1.42.1
+ARG BIN_IMAGE=denoland/deno:bin-${DENO_VERSION}
+FROM ${BIN_IMAGE} AS bin
+
+# Etapa 2: imagen final basada en Debian
+FROM debian:bookworm
+
+ARG USERNAME=pablo
+ARG DENO_VERSION
+
+ARG URL=/projects/bachilitos
+
+# Instalación de paquetes base, usuario y permisos
+# Instalar paquetes base, usuario y permisos
+RUN apt-get update -qq && \
+  apt-get install -y git vim less sudo net-tools curl iproute2 && \
+  useradd -r -m -s /bin/bash -d /home/$USERNAME -u 1000 $USERNAME && \
+  echo "$USERNAME ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME && \
+  chmod 0440 /etc/sudoers.d/$USERNAME
+
+# Instalación de Node.js 21 y Biome
+RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && \
+  apt-get update -qq && \
+  apt-get install -y nodejs && \
+  npm install -g @biomejs/biome
+
+# Variables de entorno de Deno
+ENV DENO_VERSION=${DENO_VERSION}
+ENV DENO_DIR=/home/$USERNAME${URL}/deno-dir
+ENV DENO_INSTALL_ROOT=/usr/local
+
+# Copia el binario de Deno desde la etapa anterior
+COPY --from=bin /deno /usr/bin/deno
+
+# Crear directorios y dar permisos
+RUN mkdir -p /home/$USERNAME${URL} \
+    /home/$USERNAME${URL}/deno-dir && \
+    chown -R $USERNAME:$USERNAME \
+    /home/$USERNAME${URL} \
+    /home/$USERNAME${URL}/deno-dir
+
+
+# Copiar archivos del proyecto y configuración de bashrc
+COPY . /home/$USERNAME${URL}
+COPY .devcontainer/.bashrc /home/$USERNAME${URL}/.devcontainer/.bashrc
+RUN chown -R $USERNAME:$USERNAME /home/$USERNAME
+
+# Cambiar a usuario no root
+USER $USERNAME
+
+# Establecer directorio de trabajo
+WORKDIR /home/$USERNAME${URL}
+
+EXPOSE 5173
+# Comando por defecto
+CMD ["deno", "task", "dev", "bash"]
