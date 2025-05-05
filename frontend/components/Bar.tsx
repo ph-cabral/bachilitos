@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const menuItems = ["", "Tienda", "Sobre"];
 
-export default function Bar({ menuType }: { menuType: "sidebar" | "navbar" }) {
+export default function Bar({ menuType }: { menuT21ype: "sidebar" | "navbar" }) {
   const isSidebar = menuType === "sidebar";
   const [isAnimating, setIsAnimating] = useState(true);
 
@@ -23,7 +23,7 @@ export default function Bar({ menuType }: { menuType: "sidebar" | "navbar" }) {
             ? "flex"
             : `flex ${isSidebar ? "flex-col" : "flex-row"} gap-4`
         }
-        ${isSidebar ? "w-48 h-screen" : "h-20 w-screen"}
+        ${isSidebar ? "w-48 h-screen bg-black" : "h-20 w-screen bg-black"}
       `}
     >
       {menuItems.map((item, index) => (
