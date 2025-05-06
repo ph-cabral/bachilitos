@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, [menuType]);
 
   return (
-    <div className="v-full w-full">
+    <div className="v-full w-full bg">
       <div className="fixed">
         {/* <button                                                             
           onClick={() =>
