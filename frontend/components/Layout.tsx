@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import  Bar  from "./Bar";
-// import { Sidebar } from './Sidebar';
+import React, { useEffect, useState }from "react";
 import  Navbar  from './Navbar';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -30,15 +28,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* <Bar menuType={menuType} /> */}
 
-      <main
+      {/* <main 
         className={`transition-all duration-500 p-4 ${
           menuType === "sidebar" ? "pl-52 pt-12" : "pt-28"
-        }`}
-        >
-        <Navbar/>
-          {/* <Sidebar/> */}
-      {children}
-      </main>
+        }`}> */}
+        <Navbar />
+        {/* <Sidebar/> */}
+        {children}
+      {/* </main> */}
     </div>
   );
 }

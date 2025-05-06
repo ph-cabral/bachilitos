@@ -1,50 +1,77 @@
-import { useEffect, useState } from "react";
-import { Link } from "wouter";
-import { motion } from "framer-motion";
+import React from 'react'
+import { Link } from 'wouter';
 
-const menuItems = ["", "Tienda", "Sobre"];
 
-export default function Bar({ menuType }: { menuT21ype: "sidebar" | "navbar" }) {
-  const isSidebar = menuType === "sidebar";
-  const [isAnimating, setIsAnimating] = useState(true);
-
-  // Disparar animación en cada cambio de menuType
-  useEffect(() => {
-    setIsAnimating(true);
-    const timeout = setTimeout(() => setIsAnimating(false), 600); // mismo que duración de transición
-    return () => clearTimeout(timeout);
-  }, [menuType]);
-
+const Bar = () => {
   return (
-    <div
-      className={`fixed 
-        ${
-          isAnimating
-            ? "flex"
-            : `flex ${isSidebar ? "flex-col" : "flex-row"} gap-4`
-        }
-        ${isSidebar ? "w-48 h-screen bg-black" : "h-20 w-screen bg-black"}
-      `}
-    >
-      {menuItems.map((item, index) => (
-        <motion.div
-          key={index}
-          animate={{
-            x: isSidebar ? 40 : index * 130,
-            y: isSidebar ? index * 50 : 0,
-            rotate: isSidebar ? 0 : 0,
-          }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
-          className={isAnimating ? "absolute" : "static"}
+    <>
+      <Link href="lugar1">
+        <li
+          className="hover:text-pink-400 transition border-br-2 
+                                           border-white hover:border-pink-400 cursor-pointer"
         >
-          <Link
-            href={item}
-            className="block px-6 m-2 py-1 hover:underline focus:outline-none focus:ring-2 focus:ring-white rounded"
-          >
-            {item === "" ? "Inicio" : item}
-          </Link>
-        </motion.div>
-      ))}
-    </div>
+          lugar1
+        </li>
+      </Link>
+      <div className="group">
+        <button
+          className="hover:text-pink-400 transition border-br-2 
+                                          border-white hover:border-pink-400 cursor-pointer"
+        ></button>
+        <div className="hidden group-hover:flex flex-col absolute left-0 p-0 w-full bg-white z-20 text-black duration-300">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5"></div>
+          <div className="flex flex-col">
+            <h3 className="mb-4 text-2x1 text-pink400">tienda</h3>
+            <a href="remera" className="hover:underline hover:text-pink-400">
+              remeras
+            </a>
+            <a href="remera" className="hover:underline hover:text-pink-400">
+              pantalones
+            </a>
+            <a href="remera" className="hover:underline hover:text-pink-400">
+              camperas
+            </a>
+            <h3 className="mb-4 text-2x1 text-pink400">tienda</h3>
+            <a href="remera" className="hover:underline hover:text-pink-400">
+              remeras
+            </a>
+            <a href="remera" className="hover:underline hover:text-pink-400">
+              pantalones
+            </a>
+            <a href="remera" className="hover:underline hover:text-pink-400">
+              camperas
+            </a>
+            <h3 className="mb-4 text-2x1 text-pink400">tienda</h3>
+            <a href="remera" className="hover:underline hover:text-pink-400">
+              remeras
+            </a>
+            <a href="remera" className="hover:underline hover:text-pink-400">
+              pantalones
+            </a>
+            <a href="remera" className="hover:underline hover:text-pink-400">
+              camperas
+            </a>
+          </div>
+        </div>
+      </div>
+      <Link href="lugar2">
+        <li
+          className="hover:text-pink-400 transition border-br-2 
+                                           border-white hover:border-pink-400 cursor-pointer"
+        >
+          lugar2
+        </li>
+      </Link>
+      <Link href="lugar3">
+        <li
+          className="hover:text-pink-400 transition border-br-2 
+                                           border-white hover:border-pink-400 cursor-pointer"
+        >
+          lugar3
+        </li>
+      </Link>
+    </>
   );
 }
+
+export default Bar
