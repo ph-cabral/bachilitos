@@ -8,3 +8,6 @@
 # IDEs and editors
 /.idea/
 /.vscode/
+
+
+.gitignore
